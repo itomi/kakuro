@@ -1,0 +1,18 @@
+apply plugin 'eclipse'
+apply plugin 'java'
+
+	sourceSets{
+		main{
+			java{
+					'src'
+				}
+			}
+	}
+
+	repositories {
+		mavenCentral()
+	}
+	
+	dependencies {
+    	compile group: 'com.google.guava', name: 'guava', version: '15.0'
+	}

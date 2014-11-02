@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CommonFiles"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/KakuroGenerator"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/KakuroSolver"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

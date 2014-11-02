@@ -1,10 +1,25 @@
 apply plugin: 'java'
+apply plugin: 'eclipse'
 
 buildscript {
+	sourceCompatibility = '1.8'
+	
+	sourceSets{
+		main {
+				java {
+						'src/'
+					}
+			}
+	}
+	
 	repositories {
 		mavenCentral()
 	}
+	
 	dependencies {
-		classpath 
+		
 	}
+	
+	
+	
 }
