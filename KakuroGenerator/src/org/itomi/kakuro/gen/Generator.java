@@ -2,14 +2,16 @@ package org.itomi.kakuro.gen;
 
 import org.itomi.kakuro.model.Field;
 
+
+
 public class Generator {
- Field field;
+ private Field field = null;
  
  public Generator() {
 	 field = new Field();	
 }
  
  public String printGenerator() {
-	 return this.toString();
+	 return field.toString();
  }
 }

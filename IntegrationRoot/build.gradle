@@ -1,25 +1,46 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-buildscript {
-	sourceCompatibility = '1.8'
-	
-	sourceSets{
-		main {
-				java {
-						'src/'
-					}
-			}
+//rootProject.name = 'IntegrationRoot'
+
+sourceCompatibility = '1.8'
+
+version = '1.0';
+
+def datehash = new Date();
+println datehash
+
+sourceSets{
+	main {
+			java {
+					srcDirs =[ 'src/']
+				}
+		}
+	test {
+			java{
+					srcDirs =['test/']
+				}
+			output.classesDir = 'build/classes'
 	}
-	
-	repositories {
-		mavenCentral()
-	}
-	
-	dependencies {
-		
-	}
-	
-	
-	
+}
+
+
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+    compile( [group: 'com.google.guava', name: 'guava', version: '15.0'],
+    		 [group: 'org.slf4j', name: 'slf4j-api', version: '1.7.0'],
+    		 [group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.0'],
+    		 [group: 'junit', name: 'junit', version: '4.11'])
+    testCompile( [group: 'org.slf4j', name: 'slf4j-api', version: '1.7.0'],
+			[group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.0'],
+			[group: 'junit', name: 'junit', version: '4.11'])
+}
+
+test{
+	testLogging.showStandardStreams = true
 }
