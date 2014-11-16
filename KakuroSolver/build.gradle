@@ -6,8 +6,8 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 version = '1.0';
 
-def datehash = new Date();
-println datehash
+def date = new Date();
+println date
 
 sourceSets{
 	main {
@@ -43,6 +43,6 @@ dependencies {
 test{
 	//testLogging.showStandardStreams = true
     afterTest { desc, result -> 
-        println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+        println "[${desc.className}.${desc.name}] result: ${result.resultType}"
     }
 }
