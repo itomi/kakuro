@@ -3,7 +3,8 @@ apply plugin: 'eclipse'
 
 //rootProject.name = 'IntegrationRoot'
 
-sourceCompatibility = '1.8'
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 version = '1.0';
 
