@@ -1,1 +1,10 @@
+include 'CommonFiles'
+include 'KakuroGenerator'
+include 'KakuroSolver'
 rootProject.name = 'IntegrationRoot'
+
+
+project(":CommonFiles").projectDir = new File(settingsDir, '../CommonFiles')
+project(":KakuroGenerator").projectDir = new File(settingsDir, '../KakuroGenerator')
+project(":KakuroSolver").projectDir = new File(settingsDir, '../KakuroSolver')
+

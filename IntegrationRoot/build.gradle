@@ -32,6 +32,10 @@ repositories {
 }
 
 dependencies {
+	compile project(':CommonFiles')
+	compile project(':KakuroGenerator')
+	compile project(':KakuroSolver')
+
     compile( /*[group: 'com.google.guava', name: 'guava', version: '15.0'],*/
     		 [group: 'org.slf4j', name: 'slf4j-api', version: '1.7.0'],
     		 [group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.0'],
