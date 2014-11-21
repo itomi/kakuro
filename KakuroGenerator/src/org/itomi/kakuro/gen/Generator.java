@@ -8,7 +8,6 @@ import org.jgrapht.graph.WeightedMultigraph;
 
 public class Generator {
  private Field field = null;
- WeightedGraphGenerator<V, E> grap = null;
  
  public Generator() {
 	 field = new Field();	
