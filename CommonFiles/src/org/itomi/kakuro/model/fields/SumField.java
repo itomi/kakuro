@@ -15,6 +15,21 @@ public class SumField extends Field {
 	
 	private Set<ValueField> verticalFields = Sets.newHashSet();
 	
+	public SumField() {}
+	
+	public void setSumForDirection(Direction direction, int value) {
+		constraints.put(direction, new ConstraintHolder(value));
+	}
+	
+	public void replaceSumForDirection(Direction direction, int value) {
+		ConstraintHolder constraintHolder = constraints.get(direction);
+		constraintHolder.setSum(value);
+	}
+	
+	public void addHorizontalField(ValueField field) {
+		horizontalFields.add(field);
+	}
+	
 	public enum Direction {
 		NORTH,
 		WEST,
