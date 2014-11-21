@@ -1,6 +1,6 @@
 package org.itomi.kakuro.gen;
 
-import org.itomi.kakuro.model.Field;
+import org.itomi.kakuro.model.fields.Field;
 
 public class ProjectDependenycTest2 {
 

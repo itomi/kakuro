@@ -1,5 +1,5 @@
 package org.itomi.kakuro.gen;
-import org.itomi.kakuro.model.Field;
+import org.itomi.kakuro.model.fields.Field;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
