@@ -8,7 +8,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.google.common.collect.Sets;
-
+/**
+ * 
+ * Integer Partitioning algorithm 
+ * 
+ * Zapozyczone do zautomatyzowania podzialu liczb na cyfry do gry kakuro. 
+ * 
+ * @author  Chris Greene @ https://github.com/cwgreene/algorithms
+ *
+ */
 public class Partitions{
     public static List<List<Integer>> partitions(int n){
         List<List<Integer>> partitions = new ArrayList<List<Integer>>();

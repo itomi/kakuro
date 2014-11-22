@@ -39,7 +39,11 @@ public class Grid {
 	 */
 	public Grid initialize(int x, int y) {
 		fieldMatrix = new Field[x][y];
-		Arrays.fill(fieldMatrix, new BlankField());
+		for(int i = 0 ; i < x ; i ++) {
+			for(int j = 0 ; j < y ; j++ ) {
+				fieldMatrix[i][j] = BlankField.BLANK;
+			}
+		}
 		return this;
 	}
 	
