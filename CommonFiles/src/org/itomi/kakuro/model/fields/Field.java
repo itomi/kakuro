@@ -9,7 +9,7 @@ import org.itomi.kakuro.integer.Tuple;
  * @author Karol Kulesza
  *
  */
-public class Field {
+public class Field extends IndentifiableEntity{
 	private Tuple<Integer, Integer> position;
 	
 	public Field() {

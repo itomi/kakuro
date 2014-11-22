@@ -4,12 +4,16 @@ import java.util.List;
 
 import org.itomi.kakuro.model.fields.BlankField;
 import org.itomi.kakuro.model.fields.Field;
+import org.itomi.kakuro.model.fields.IndentifiableEntity;
 import org.itomi.kakuro.model.fields.SumField;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 
-public class Grid {
+public class Grid extends IndentifiableEntity{
+	private int x;
+	private int y;
+	
 	Field[][] fieldMatrix;
 	
 	List<SumField> sumsList = Lists.newLinkedList();
@@ -17,35 +21,50 @@ public class Grid {
 	public Grid() {}
 
 	/**
-	 * Initalizes the grid with given arguments.
+	 * Inicjalizuje matryce pol przy pomocy {@link Grid#initialize(int, int)}.
 	 * @param x
-	 * 			horizontal size of grid
+	 * 			pozioma wielkosc matrycy
 	 * @param y
-	 * 			vertical size of grid
+	 * 			pozioma wielkosc matrycy
 	 */
 	public Grid(int x, int y) {
 		initialize(x,y);
 	}
 	
 	/**
-	 * Initalizes the grid with given arguments.
+	 * Inicjalizuje matryce z podanymi argumentami.
 	 * @param x
-	 * 			horizontal size of grid
+	 * 			pozioma wielkosc matrycy
 	 * @param y
-	 * 			vertical size of grid
+	 * 			pozioma wielkosc matrycy
 	 * @return
-	 * 			same instance on which the call has been performed
+	 * 			instancja na ktorej wolana jest metoda
 	 */
 	public Grid initialize(int x, int y) {
 		fieldMatrix = new Field[x][y];
-		for(int i = 0 ; i < x ; i ++) {
-			for(int j = 0 ; j < y ; j++ ) {
+		for(int i = 1 ; i < x ; i ++) {
+			for(int j = 1 ; j < y ; j++ ) {
 				fieldMatrix[i][j] = BlankField.BLANK;
 			}
 		}
 		return this;
 	}
 	
+	public Field getFieldAt(int x, int y) throws Exception {
+		assertValuesInRange(x, y);
+		return fieldMatrix[x][y];
+	}
+
+	private void assertValuesInRange(int x, int y) throws Exception {
+		if( (x >= this.x && x <0 ) || (y >= this.y && y < 0 ) ) {
+			throw new Exception("OutOfBound");
+		}
+	}
+	
+	public void setField(int x, int y, Field field) throws Exception {
+		assertValuesInRange(x, y);
+		fieldMatrix[x][y] = field;
+	}
 	
 	@VisibleForTesting
 	public Field[][] getMatrix() {
