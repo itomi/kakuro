@@ -1,4 +1,4 @@
-package org.itomi.kakuro.model.fields;
+package org.itomi.kakuro.integer;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Sets;

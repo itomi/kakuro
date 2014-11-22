@@ -1,4 +1,4 @@
-package org.itomi.kakuro.model.fields;
+package org.itomi.kakuro.integer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -566,7 +566,6 @@ public enum IntegerPartition {
 	private Integer sum;
 	private List<Set<Integer>> partitions;
 	
-	private static Map<Integer, Set<Integer>> setSizeToPossibleValues = new HashMap<>();
 	private static Map<Integer, List<Set<Integer>>> valueToPossibleSums = new HashMap<>();
 	private static HashMultimap<Tuple<Integer, Integer>, Set<Integer> > setSizeAndValueToPosiblePartitions = HashMultimap.create();
 	

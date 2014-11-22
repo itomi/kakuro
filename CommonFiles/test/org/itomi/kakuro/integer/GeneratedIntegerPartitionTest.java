@@ -1,8 +1,9 @@
-package org.itomi.kakuro.model.fields;
+package org.itomi.kakuro.integer;
 
 import java.util.List;
 import java.util.Set;
 
+import org.itomi.kakuro.integer.IntegerPartition;
 import org.junit.Assert;
 import org.junit.Test;
 

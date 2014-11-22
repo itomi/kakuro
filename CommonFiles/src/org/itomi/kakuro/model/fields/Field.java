@@ -1,5 +1,7 @@
 package org.itomi.kakuro.model.fields;
 
+import org.itomi.kakuro.integer.Tuple;
+
 /**
  * 
  * Klasa bazowa dla pol na krzyzowce, sluzy tylko i wylacznie jako spinacz typow.

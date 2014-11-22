@@ -1,10 +1,10 @@
 package org.itomi.kakuro.model.fields;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 
 public class SumField extends Field {
@@ -28,6 +28,14 @@ public class SumField extends Field {
 	
 	public void addHorizontalField(ValueField field) {
 		horizontalFields.add(field);
+	}
+	
+	public void addVerticalField(ValueField field) {
+		verticalFields.add(field);
+	}
+	
+	public Optional<ConstraintHolder> getSumForDirection(Direction dir) {
+		return Optional.of(constraints.get(dir));
 	}
 	
 	public enum Direction {

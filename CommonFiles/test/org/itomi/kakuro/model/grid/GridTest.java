@@ -1,10 +1,7 @@
 package org.itomi.kakuro.model.grid;
 
-import org.junit.Assert;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.itomi.kakuro.model.fields.Field;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

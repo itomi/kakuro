@@ -1,6 +1,5 @@
 package org.itomi.kakuro.model.grid;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.itomi.kakuro.model.fields.BlankField;

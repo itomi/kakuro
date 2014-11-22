@@ -1,4 +1,4 @@
-package org.itomi.kakuro.model.fields;
+package org.itomi.kakuro.integer;
 
 public class Tuple<P1, P2> {
 	private P1 p1;
@@ -9,6 +9,7 @@ public class Tuple<P1, P2> {
 		this.p2 = p2;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Tuple) {
