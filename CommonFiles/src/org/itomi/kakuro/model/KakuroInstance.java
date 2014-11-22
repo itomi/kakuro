@@ -6,6 +6,9 @@ public class KakuroInstance {
 
 	private Field[] instanceGrid = null;
 
+	public KakuroInstance() {
+	}
+	
 	public Field[] getInstanceGrid() {
 		return instanceGrid;
 	}
