@@ -53,9 +53,9 @@ public class Partitions{
         Set<Integer> allowedInts = allowedValuesOfPartition;
 		List<List<Integer>> partitions= partitions(n);
         for(List<Integer> part : partitions) {
-        	HashSet<Integer> treeSet = new HashSet<Integer>(part);
-        	if(sumsUp(treeSet, n) && allowedInts.containsAll(treeSet)) {
-        		party.add(treeSet);
+        	HashSet<Integer> hashSet = new HashSet<Integer>(part);
+        	if(sumsUp(hashSet, n) && allowedInts.containsAll(hashSet) && hashSet.size() > 1) {
+        		party.add(hashSet);
         	}
         }
         return party;
