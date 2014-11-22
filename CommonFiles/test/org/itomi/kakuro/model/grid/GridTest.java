@@ -28,8 +28,8 @@ public class GridTest {
 		Field[][] matrix = grid.getMatrix();
 		Assert.assertNotNull(matrix);
 		try {
-			for (int i = x; i >= 0; i--) {
-				for (int j = y; j >= 0; j--) {
+			for (int i = 0; i < x; i++) {
+				for (int j = 0 ; j < y; j++) {
 					Assert.assertNotNull(
 							"One of fields is null!" + i + " " + j,
 							matrix[i][j]);
