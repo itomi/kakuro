@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.Sets;
 
 public class SumField extends Field {
@@ -16,6 +17,10 @@ public class SumField extends Field {
 	private Set<ValueField> verticalFields = Sets.newHashSet();
 	
 	public SumField() {}
+	
+	public SumField(int x, int y) {
+		super(x,y);
+	}
 	
 	public void setSumForDirection(Direction direction, int value) {
 		constraints.put(direction, new ConstraintHolder(value));
@@ -38,11 +43,34 @@ public class SumField extends Field {
 		return Optional.of(constraints.get(dir));
 	}
 	
+	public Set<ValueField> getFieldsForDirection(Direction dir) {
+		switch(dir) {
+			case SOUTH:
+				return verticalFields;
+			case EAST:
+				return horizontalFields;
+			default:
+				return Sets.newHashSet();
+				
+		}
+	}
+	
 	public enum Direction {
 		NORTH,
 		WEST,
 		EAST, // and this one 
 		SOUTH // this one
 		// are used, north and west, are for future modification
+	}
+
+	@Override
+	public int getFieldProportionValue() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isAssignable() {
+		return true;
 	}
 }

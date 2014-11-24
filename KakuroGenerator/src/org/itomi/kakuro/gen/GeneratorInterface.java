@@ -10,5 +10,5 @@ public interface GeneratorInterface {
 	 * @return
 	 * 		wygenerowana instancja problemu
 	 */
-	public KakuroInstance generate(Long seed);
+	public KakuroInstance generate(Long seed) throws Exception;
 }

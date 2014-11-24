@@ -1,5 +1,5 @@
 package org.itomi.kakuro.gen;
-import org.itomi.kakuro.model.fields.Field;
+import org.itomi.kakuro.model.fields.ValueField;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class ProjectDependenycTest2Test {
 	
 	@Test
 	public void test_testSettersAndGetters() {
-		testedObject.setField(new Field());
+		testedObject.setField(new ValueField(null,null,9,9));
 		Assert.assertNotNull("Cooles", testedObject.getField());
 	}
 	

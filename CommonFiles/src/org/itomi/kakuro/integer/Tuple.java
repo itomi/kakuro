@@ -9,6 +9,14 @@ public class Tuple<P1, P2> {
 		this.p2 = p2;
 	}
 
+	public P1 getFirst() {
+		return p1;
+	}
+	
+	public P2 getSecond() {
+		return p2;
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean equals(Object obj) {

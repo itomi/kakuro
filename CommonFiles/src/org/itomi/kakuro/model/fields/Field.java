@@ -9,11 +9,15 @@ import org.itomi.kakuro.integer.Tuple;
  * @author Karol Kulesza
  *
  */
-public class Field extends IndentifiableEntity{
-	private Tuple<Integer, Integer> position;
+public abstract class Field extends IndentifiableEntity{
+	protected Tuple<Integer, Integer> position;
 	
 	public Field() {
 		position = new Tuple<Integer, Integer>(0, 0);
+	}
+	
+	public Field(int x, int y) {
+		position = new Tuple<Integer, Integer>(x, y);
 	}
 
 	public Tuple<Integer, Integer> getPosition() {
@@ -27,4 +31,8 @@ public class Field extends IndentifiableEntity{
 	public void setPosition(int x, int y) {
 		position = new Tuple<Integer, Integer>(x, y);
 	}
+	
+	public abstract int getFieldProportionValue();
+	
+	public abstract boolean isAssignable();
 }

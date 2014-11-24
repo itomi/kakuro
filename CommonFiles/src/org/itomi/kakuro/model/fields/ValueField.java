@@ -8,7 +8,13 @@ public class ValueField extends Field {
 	private SumField horizontalSum;
 	
 	Optional<Integer> value = Optional.absent();
-
+	
+	public ValueField(SumField verticalSum, SumField horizontalSum, int x, int y) {
+		super(x,y);
+		this.verticalSum = verticalSum;
+		this.horizontalSum = horizontalSum;
+	}
+	
 	public SumField getHorizontalSum() {
 		return horizontalSum;
 	}
@@ -31,5 +37,21 @@ public class ValueField extends Field {
 	
 	public void setValue(Integer value) {
 		this.value = Optional.of(value);
+	}
+	
+	public int getValue() {
+		Integer integer = value.get();
+		return Optional.fromNullable(integer).or(0);
+	}
+
+	@Override
+	public int getFieldProportionValue() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isAssignable() {
+		return false;
 	}
 }

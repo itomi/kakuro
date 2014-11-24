@@ -2,6 +2,7 @@ package org.itomi.kakuro.model.grid;
 
 import java.util.List;
 
+import org.itomi.kakuro.integer.Tuple;
 import org.itomi.kakuro.model.fields.BlankField;
 import org.itomi.kakuro.model.fields.Field;
 import org.itomi.kakuro.model.fields.IndentifiableEntity;
@@ -13,6 +14,7 @@ import com.google.common.collect.Lists;
 public class Grid extends IndentifiableEntity{
 	private int x;
 	private int y;
+	private int fullfillment = 1;
 	
 	Field[][] fieldMatrix;
 	
@@ -42,32 +44,48 @@ public class Grid extends IndentifiableEntity{
 	 */
 	public Grid initialize(int x, int y) {
 		fieldMatrix = new Field[x][y];
-		for(int i = 1 ; i < x ; i ++) {
-			for(int j = 1 ; j < y ; j++ ) {
-				fieldMatrix[i][j] = BlankField.BLANK;
+		for(int i = 0 ; i < x ; i ++) {
+			for(int j = 0 ; j < y ; j++ ) {
+				fieldMatrix[i][j] = new BlankField(x,y);
 			}
 		}
 		return this;
 	}
 	
-	public Field getFieldAt(int x, int y) throws Exception {
+	public Field getFieldAt(int x, int y) throws FieldBoundaryException {
 		assertValuesInRange(x, y);
 		return fieldMatrix[x][y];
 	}
 
-	private void assertValuesInRange(int x, int y) throws Exception {
+	private void assertValuesInRange(int x, int y) throws FieldBoundaryException {
 		if( (x >= this.x && x <0 ) || (y >= this.y && y < 0 ) ) {
-			throw new Exception("OutOfBound");
+			throw new FieldBoundaryException("out of bound");
 		}
 	}
 	
-	public void setField(int x, int y, Field field) throws Exception {
+	public void setField(int x, int y, Field field) throws FieldBoundaryException {
 		assertValuesInRange(x, y);
+		Field currentField = fieldMatrix[x][y];
+		if( currentField.getFieldProportionValue() != field.getFieldProportionValue() ) {
+			fullfillment += field.getFieldProportionValue();
+		}
 		fieldMatrix[x][y] = field;
 	}
 	
 	@VisibleForTesting
 	public Field[][] getMatrix() {
 		return fieldMatrix;
+	}
+
+	public int getFillProportion() {
+		return fullfillment;
+	}
+
+	public ImmutableSubMatrix<Field> getNeighbours(Tuple<Integer, Integer> position) {
+		return new ImmutableSubMatrix<Field>(this.fieldMatrix, position.getFirst(), position.getSecond(), 3, 3);		
+	}
+
+	public void addSum(SumField verticalSum) {
+		this.sumsList.add(verticalSum);
 	}
 }

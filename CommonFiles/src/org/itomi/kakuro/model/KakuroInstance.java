@@ -1,8 +1,13 @@
 package org.itomi.kakuro.model;
 
-import org.itomi.kakuro.model.grid.Grid;
+import java.util.Observable;
 
-public class KakuroInstance {
+import org.itomi.kakuro.integer.Tuple;
+import org.itomi.kakuro.model.fields.Field;
+import org.itomi.kakuro.model.grid.Grid;
+import org.itomi.kakuro.model.grid.ImmutableSubMatrix;
+
+public class KakuroInstance extends Observable {
 
 	private int horizontal;
 	private int vertical;
@@ -25,4 +30,17 @@ public class KakuroInstance {
 	public int getVerticalLength() {
 		return vertical;
 	}
+	
+	public void notifyObservers() {
+		notifyObservers(this);
+	}
+	
+	public int getDensity() {
+		return grid.getFillProportion();
+	}
+
+	public ImmutableSubMatrix<Field> getNeighbours(Tuple<Integer, Integer> position) {
+		return grid.getNeighbours(position);
+	}
+	
 }

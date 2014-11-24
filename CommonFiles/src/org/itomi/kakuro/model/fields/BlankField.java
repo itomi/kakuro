@@ -1,5 +1,6 @@
 package org.itomi.kakuro.model.fields;
 
+
 /**
  * Klasa stub sluzy do rozpoznawania ze dane pole w krzyzowce jest niezajete.
  * 
@@ -7,5 +8,19 @@ package org.itomi.kakuro.model.fields;
  *
  */
 public class BlankField extends Field {
-	public static final BlankField BLANK = new BlankField();
+	
+	public BlankField(int x, int y) {
+		super(x,y);
+	}
+	
+	@Override
+	public int getFieldProportionValue() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isAssignable() {
+		return true;
+	}
 }
