@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.Sets;
 
 public class SumField extends Field {

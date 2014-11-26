@@ -1,12 +1,8 @@
 package org.itomi.kakuro.model.grid;
 
-import java.util.Set;
-
 import org.itomi.kakuro.integer.Tuple;
 import org.itomi.kakuro.model.fields.Field;
 import org.itomi.kakuro.model.fields.UnasignableField;
-
-import com.google.common.collect.Sets;
 
 /**
  * Klasa ulatwiajaca dostep do pol matrycy danych poprzez stworzenie zmiennych wzglednych od podanego punktu
