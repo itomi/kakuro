@@ -2,6 +2,7 @@ package org.itomi.kakuro.model.grid;
 
 import java.util.Set;
 
+import org.itomi.kakuro.integer.Tuple;
 import org.itomi.kakuro.model.fields.Field;
 import org.itomi.kakuro.model.fields.UnasignableField;
 
@@ -47,5 +48,15 @@ public class ImmutableSubMatrix<T extends Field> {
 		neighbors[3] = get(0, 1);
 		
 		return neighbors;
+	}
+	
+	public Field getLeftSideNeigbor(Field field) {
+		Tuple<Integer, Integer> position = field.getPosition();
+		return get(position.getFirst()-1, position.getSecond());
+	}
+	
+	public Field getUpperSideNeighbor(Field field) {
+		Tuple<Integer, Integer> position = field.getPosition();
+		return get(position.getFirst(), position.getSecond()-1);
 	}
 }

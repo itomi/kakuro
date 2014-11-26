@@ -7,6 +7,7 @@ import org.itomi.kakuro.model.fields.BlankField;
 import org.itomi.kakuro.model.fields.Field;
 import org.itomi.kakuro.model.fields.IndentifiableEntity;
 import org.itomi.kakuro.model.fields.SumField;
+import org.itomi.kakuro.model.fields.UnasignableField;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
@@ -52,9 +53,12 @@ public class Grid extends IndentifiableEntity{
 		return this;
 	}
 	
-	public Field getFieldAt(int x, int y) throws FieldBoundaryException {
-		assertValuesInRange(x, y);
-		return fieldMatrix[x][y];
+	public Field getFieldAt(int x, int y) {
+		try{
+			return fieldMatrix[x][y];
+		} catch(Exception e) {
+			return new UnasignableField();
+		}
 	}
 
 	private void assertValuesInRange(int x, int y) throws FieldBoundaryException {
@@ -87,5 +91,13 @@ public class Grid extends IndentifiableEntity{
 
 	public void addSum(SumField verticalSum) {
 		this.sumsList.add(verticalSum);
+	}
+	
+	public int getHorizontalLenght() {
+		return x;
+	}
+	
+	public int getVerticalLength() {
+		return y;
 	}
 }

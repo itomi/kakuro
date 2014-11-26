@@ -9,6 +9,10 @@ public class ValueField extends Field {
 	
 	Optional<Integer> value = Optional.absent();
 	
+	public ValueField(int x, int y) {
+		super(x,y);
+	}
+	
 	public ValueField(SumField verticalSum, SumField horizontalSum, int x, int y) {
 		super(x,y);
 		this.verticalSum = verticalSum;
@@ -52,6 +56,6 @@ public class ValueField extends Field {
 
 	@Override
 	public boolean isAssignable() {
-		return false;
+		return true; // moze w przyslosci 
 	}
 }
