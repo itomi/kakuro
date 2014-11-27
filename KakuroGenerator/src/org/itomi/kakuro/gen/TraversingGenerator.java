@@ -1,8 +1,11 @@
 package org.itomi.kakuro.gen;
 
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 
+import org.itomi.kakuro.integer.GeneratedIntegerPartition;
 import org.itomi.kakuro.integer.Tuple;
 import org.itomi.kakuro.model.KakuroInstance;
 import org.itomi.kakuro.model.fields.BlankField;
@@ -31,6 +34,8 @@ import com.google.common.collect.Sets;
 public class TraversingGenerator implements GeneratorInterface {
 
 	private static final int MAXIMUM_SUM_VALUE = 45;
+	
+	private static final Set<Integer> allowedValues = Sets.newHashSet(1,2,3,4,5,6,7,8,9);
 	private int horizontalLength;
 	private int verticalLength;
 
@@ -104,34 +109,61 @@ public class TraversingGenerator implements GeneratorInterface {
 			SumField fild = (SumField) field;
 			int horizontalSum = getSumValueForDirection(fild, Direction.EAST);
 			int verticalSum = getSumValueForDirection(fild, Direction.SOUTH);
-			Set<Integer> allProhibitetValues = getProhibitedValuesForSum(fild);
+
+			Set<ValueField> horizontalFieldValues = fild
+					.getFieldsForDirection(Direction.EAST);
+			Set<Integer> horizontalValues = extractValues(horizontalFieldValues);
+			Set<ValueField> verticalFieldValues = fild
+					.getFieldsForDirection(Direction.SOUTH);
 
 			SumField upperSum = getUpperSum(instance, fild);
 			SumField leftSup = getLeftSum(instance, fild);
-			if (upperSum != null) {
-				allProhibitetValues.getClass();
+			
+			Set<ValueField> verticalFieldValues2 = upperSum.getFieldsForDirection(Direction.SOUTH);
+			Set<ValueField> horizontalFieldValues2 = leftSup.getFieldsForDirection(Direction.EAST);
+			
+			Set<Integer> prohibitedValues = extractValues(horizontalFieldValues, horizontalFieldValues2, verticalFieldValues, verticalFieldValues2);
+			
+			Set<Integer> newHashSet = Sets.newTreeSet(allowedValues);
+			newHashSet.removeAll(prohibitedValues);
+			
+			if(newHashSet.isEmpty()) {
+				throw new Exception("Somehow there's a problem with values, there's none to assign");
 			}
-
+			
+			Integer[] array = newHashSet.toArray(new Integer[newHashSet.size()]);
+			Integer choosenValue = array[random.nextInt(array.length)];
+			
+			return choosenValue;
 		} else if (field instanceof ValueField) {
-
+			throw new Exception("not implemented yet");
 		} else if (field instanceof BlankField) {
-
+			// wez sumy lewa i gorna, wez wartosci
+			// wez mozliwe wartosci i usun te z sum
+			// wybiersz randomem jakas wartosc
+			Field leftSideNeigbor = neighbours.getLeftSideNeigbor();
+			Field upperSideNeighbor  = neighbours.getUpperSideNeighbor();
+			if(leftSideNeigbor instanceof BlankField && upperSideNeighbor instanceof BlankField ) {
+				return (random.nextInt(9)+1); // cokolwiek
+			}
 		}
-		return 0;
+		throw new IllegalStateException("Value cannot be created for fields other than SumField, BlankField");
 	}
 
-	private Set<Integer> getProhibitedValuesForSum(SumField fild)
-			throws Exception {
-		Set<ValueField> horizontalFieldValues = fild
-				.getFieldsForDirection(Direction.EAST);
-		Set<Integer> horizontalValues = extractValues(horizontalFieldValues);
-		Set<ValueField> verticalFieldValues = fild
-				.getFieldsForDirection(Direction.SOUTH);
-		Set<Integer> verticalValues = extractValues(verticalFieldValues);
-		Set<Integer> allProhibitetValues = Sets.newHashSet();
-		allProhibitetValues.addAll(horizontalValues);
-		allProhibitetValues.addAll(verticalValues);
-		return allProhibitetValues;
+	private TreeSet<Integer> extractValues(Set<ValueField>...sets) throws Exception {
+		TreeSet<Integer> values = Sets.newTreeSet();
+		
+		for( Set<ValueField> set: sets) {
+			for( ValueField field : set ) {
+				values.add(field.getValue());
+			}
+		}
+		
+		if(values.contains(0)){
+			throw new Exception("ValueField contains zero! It is prohibited!");
+		}
+		
+		return values;
 	}
 
 	private int getSumValueForDirection(SumField fild, Direction direction)
@@ -353,7 +385,7 @@ public class TraversingGenerator implements GeneratorInterface {
 	private SumField getLeftSum(KakuroInstance instance, Field s1) {
 		ImmutableSubMatrix<Field> neighbours = instance.getNeighbours(s1
 				.getPosition());
-		Field leftSideNeigbor = neighbours.getLeftSideNeigbor(s1);
+		Field leftSideNeigbor = neighbours.getLeftSideNeigbor();
 		if (leftSideNeigbor instanceof ValueField) {
 			return ((ValueField) leftSideNeigbor).getHorizontalSum();
 		} else if (leftSideNeigbor instanceof SumField) {
@@ -365,7 +397,7 @@ public class TraversingGenerator implements GeneratorInterface {
 	private SumField getUpperSum(KakuroInstance instance, Field s1) {
 		ImmutableSubMatrix<Field> neighbours = instance.getNeighbours(s1
 				.getPosition());
-		Field upperSideNeigbor = neighbours.getUpperSideNeighbor(s1);
+		Field upperSideNeigbor = neighbours.getUpperSideNeighbor();
 		if (upperSideNeigbor instanceof ValueField) {
 			return ((ValueField) upperSideNeigbor).getVerticalSum();
 		} else if (upperSideNeigbor instanceof SumField) {

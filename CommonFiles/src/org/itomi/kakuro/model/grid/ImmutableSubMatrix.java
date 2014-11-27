@@ -46,13 +46,11 @@ public class ImmutableSubMatrix<T extends Field> {
 		return neighbors;
 	}
 	
-	public Field getLeftSideNeigbor(Field field) {
-		Tuple<Integer, Integer> position = field.getPosition();
-		return get(position.getFirst()-1, position.getSecond());
+	public Field getLeftSideNeigbor() {
+		return get(-1,0);
 	}
 	
-	public Field getUpperSideNeighbor(Field field) {
-		Tuple<Integer, Integer> position = field.getPosition();
-		return get(position.getFirst(), position.getSecond()-1);
+	public Field getUpperSideNeighbor() {
+		return get(0,-1);
 	}
 }

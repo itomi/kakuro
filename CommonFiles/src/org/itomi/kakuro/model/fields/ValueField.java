@@ -56,6 +56,6 @@ public class ValueField extends Field {
 
 	@Override
 	public boolean isAssignable() {
-		return true; // moze w przyslosci 
+		return false; // moze w przyslosci 
 	}
 }
