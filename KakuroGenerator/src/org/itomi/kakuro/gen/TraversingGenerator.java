@@ -88,7 +88,7 @@ public class TraversingGenerator implements GeneratorInterface {
 
 			if (fieldIsAssignable(field)) {
 				currentValue = createValueForField(field, instance, random);
-				currentField = assignTheValue(field, currentValue);
+				currentField = assignTheValue(field, currentValue, instance);
 				updateSums(instance, currentField);
 				instance.notifyObservers();
 			} else {
@@ -117,10 +117,10 @@ public class TraversingGenerator implements GeneratorInterface {
 					.getFieldsForDirection(Direction.SOUTH);
 
 			SumField upperSum = getUpperSum(instance, fild);
-			SumField leftSup = getLeftSum(instance, fild);
+			SumField leftSum = getLeftSum(instance, fild);
 			
-			Set<ValueField> verticalFieldValues2 = upperSum.getFieldsForDirection(Direction.SOUTH);
-			Set<ValueField> horizontalFieldValues2 = leftSup.getFieldsForDirection(Direction.EAST);
+			Set<ValueField> verticalFieldValues2 = upperSum == null ? Sets.newHashSet() : upperSum.getFieldsForDirection(Direction.SOUTH);
+			Set<ValueField> horizontalFieldValues2 = leftSum == null ? Sets.newHashSet() : leftSum.getFieldsForDirection(Direction.EAST);
 			
 			Set<Integer> prohibitedValues = extractValues(horizontalFieldValues, horizontalFieldValues2, verticalFieldValues, verticalFieldValues2);
 			
@@ -145,6 +145,26 @@ public class TraversingGenerator implements GeneratorInterface {
 			Field upperSideNeighbor  = neighbours.getUpperSideNeighbor();
 			if(leftSideNeigbor instanceof BlankField && upperSideNeighbor instanceof BlankField ) {
 				return (random.nextInt(9)+1); // cokolwiek
+			} else {
+				SumField upperSum = getUpperSum(instance, upperSideNeighbor);
+				Set<Integer> forbiddenValues = Sets.newHashSet();
+				if(upperSum != null) {
+					Set<Integer> extractValues = extractValues(upperSum.getFieldsForDirection(Direction.SOUTH));
+					forbiddenValues.addAll(extractValues);
+				}
+				SumField leftSum = getLeftSum(instance, leftSideNeigbor);
+				if(leftSum != null ) {
+					Set<Integer> extractValues = extractValues(leftSum.getFieldsForDirection(Direction.EAST));
+					forbiddenValues.addAll(extractValues);
+				}
+				HashSet<Integer> possibleValues = Sets.newHashSet(allowedValues);
+				possibleValues.removeAll(forbiddenValues);
+				if(possibleValues.isEmpty()) {
+					throw new Exception("Value passed the checks when impossible to assign!");
+				}else {
+					Integer[] array = possibleValues.toArray(new Integer[possibleValues.size()]);
+					return array[random.nextInt(array.length)];
+				}
 			}
 		}
 		throw new IllegalStateException("Value cannot be created for fields other than SumField, BlankField");
@@ -157,10 +177,6 @@ public class TraversingGenerator implements GeneratorInterface {
 			for( ValueField field : set ) {
 				values.add(field.getValue());
 			}
-		}
-		
-		if(values.contains(0)){
-			throw new Exception("ValueField contains zero! It is prohibited!");
 		}
 		
 		return values;
@@ -182,22 +198,47 @@ public class TraversingGenerator implements GeneratorInterface {
 		for (ValueField field : fields) {
 			values.add(field.getValue());
 		}
-
-		if (values.contains(0)) {
-			throw new Exception(" not so good !, value is not assigned");
-		}
-
 		return values;
 	}
 
 	private void updateSums(KakuroInstance instance, ValueField field) {
-		// TODO
-
+		SumField upperSum = getUpperSum(instance, field);
+		SumField leftSum = getLeftSum(instance, field);
+		
+		field.setHorizontalSum(leftSum);
+		field.setVerticalSum(upperSum);
+		
+		if( upperSum != null ) {
+			upperSum.addVerticalField(field);
+			int newSumValue = 0;
+			for (ValueField valueField : upperSum.getFieldsForDirection(Direction.SOUTH)) {
+				newSumValue += valueField.getValue();
+			}
+			upperSum.setSumForDirection(Direction.SOUTH, newSumValue);
+		}
+		if( leftSum != null ) {
+			leftSum.addHorizontalField(field);
+			int newSumValue = 0;
+			for (ValueField valueField : leftSum.getFieldsForDirection(Direction.EAST)) {
+				newSumValue += valueField.getValue();
+			}
+			leftSum.setSumForDirection(Direction.EAST, newSumValue);
+		}
+		
 	}
 
-	private ValueField assignTheValue(Field field, int currentValue) {
-		// TODO Auto-generated method stub
-		return null;
+	private ValueField assignTheValue(Field field, int currentValue, KakuroInstance instance) {
+		Tuple<Integer, Integer> position = field.getPosition();
+		ValueField swappedValue = new ValueField(position.getFirst(), position.getSecond());
+		swappedValue.setValue(currentValue);
+		Grid grid = instance.getGrid();
+		try {
+			grid.setField(position.getFirst(), position.getSecond(), swappedValue);
+		}catch(Exception e) {
+			// skoro field istnieje aktualnie na gridzie, no to nie moze zdazyc sie sytuacja w ktorej jego pozycja jest poza
+			throw new IllegalStateException();
+		}
+		return swappedValue;
 	}
 
 	private boolean fieldIsAssignable(Field field) {
@@ -243,7 +284,20 @@ public class TraversingGenerator implements GeneratorInterface {
 	}
 
 	private void updateConstraints(SumField horizontalSum) {
-		// TODO IMPLEMENT
+		int newSum = sumValueFieldsForSumField(horizontalSum, Direction.SOUTH);
+		horizontalSum.setSumForDirection(Direction.SOUTH, newSum);
+		
+		newSum = sumValueFieldsForSumField(horizontalSum, Direction.EAST);
+		horizontalSum.setSumForDirection(Direction.EAST, newSum);
+	}
+
+	private int sumValueFieldsForSumField(SumField field, Direction dir) {
+		int newSum = 0;
+		Set<ValueField> fieldsForDirection = field.getFieldsForDirection(dir);
+		for( ValueField vfield : fieldsForDirection ) {
+			newSum += vfield.getValue();
+		}
+		return newSum;
 	}
 
 	private Field pickPlaceToCreateValue(ValueField currentField,
@@ -255,16 +309,29 @@ public class TraversingGenerator implements GeneratorInterface {
 				.getHorizontalAndVerticalNeighbors();
 		boolean picked = false;
 		Field pickedField = null;
+		int timeout = 100;
+		long start = System.currentTimeMillis();
 		while (!picked) {
 			int nextInt = rand.nextInt(horizontalAndVerticalNeighbors.length);
 			pickedField = horizontalAndVerticalNeighbors[nextInt];
 			picked = pickedField.isAssignable()
-					&& isAssgnableInContext(instance, pickedField);
+					&& isAssgnableInContext(instance, pickedField) && fieldNotOnEdge(pickedField);
+			if(picked) {
+				return pickedField;
+			}
+			if( System.currentTimeMillis() - start > timeout) {
+				break;
+			}
 		}
 
 		// if unable to pick the field, choose random place
 
 		return getFirstAssignableFieldFromInstance(instance);
+	}
+
+	private boolean fieldNotOnEdge(Field pickedField) {
+		Tuple<Integer, Integer> position = pickedField.getPosition();
+		return !(position.getFirst().equals(0) || position.getSecond().equals(0));
 	}
 
 	private Field getFirstAssignableFieldFromInstance(KakuroInstance instance) throws Exception {
@@ -411,6 +478,6 @@ public class TraversingGenerator implements GeneratorInterface {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new TraversingGenerator(100, 100).generate(100L);
+		KakuroInstance generate = new TraversingGenerator(100, 100).generate(100L);
 	}
 }

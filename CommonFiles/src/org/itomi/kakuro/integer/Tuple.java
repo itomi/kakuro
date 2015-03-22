@@ -17,6 +17,11 @@ public class Tuple<P1, P2> {
 		return p2;
 	}
 	
+	@Override
+	public String toString() {
+		return "[ " + p1.toString() + " : " + p2.toString() + " ]";
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean equals(Object obj) {

@@ -47,7 +47,7 @@ public class Grid extends IndentifiableEntity{
 		fieldMatrix = new Field[x][y];
 		for(int i = 0 ; i < x ; i ++) {
 			for(int j = 0 ; j < y ; j++ ) {
-				fieldMatrix[i][j] = new BlankField(x,y);
+				fieldMatrix[i][j] = new BlankField(i,j);
 			}
 		}
 		return this;

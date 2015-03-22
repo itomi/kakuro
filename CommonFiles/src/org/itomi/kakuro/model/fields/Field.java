@@ -35,4 +35,9 @@ public abstract class Field extends IndentifiableEntity{
 	public abstract int getFieldProportionValue();
 	
 	public abstract boolean isAssignable();
+	
+	@Override
+	public String toString() {
+		return "Field " + position.toString();
+	}
 }

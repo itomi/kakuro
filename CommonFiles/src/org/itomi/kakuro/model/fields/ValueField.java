@@ -58,4 +58,9 @@ public class ValueField extends Field {
 	public boolean isAssignable() {
 		return false; // moze w przyslosci 
 	}
+	
+	@Override
+	public String toString() {
+		return "ValueField " + position.toString();
+	}
 }

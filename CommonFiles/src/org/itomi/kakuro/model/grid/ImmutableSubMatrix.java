@@ -38,8 +38,8 @@ public class ImmutableSubMatrix<T extends Field> {
 	
 	public Field[] getHorizontalAndVerticalNeighbors() {
 		Field[] neighbors = new Field[4];
-		neighbors[0] = get(0, -1);
-		neighbors[1] = get(-1, 0);
+		neighbors[0] = get(2, 1);
+		neighbors[1] = get(1, 2);
 		neighbors[2] = get(1, 0);
 		neighbors[3] = get(0, 1);
 		
@@ -47,10 +47,10 @@ public class ImmutableSubMatrix<T extends Field> {
 	}
 	
 	public Field getLeftSideNeigbor() {
-		return get(-1,0);
+		return get(0,1);
 	}
 	
 	public Field getUpperSideNeighbor() {
-		return get(0,-1);
+		return get(1,0);
 	}
 }
