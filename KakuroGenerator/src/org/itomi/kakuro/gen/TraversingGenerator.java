@@ -309,24 +309,29 @@ public class TraversingGenerator implements GeneratorInterface {
 				.getHorizontalAndVerticalNeighbors();
 		boolean picked = false;
 		Field pickedField = null;
-		int timeout = 100;
-		long start = System.currentTimeMillis();
+		Field[] assignableFields = getAssignableFields(instance, horizontalAndVerticalNeighbors);
+		if( assignableFields.length > 0 ) {
+			pickedField = assignableFields[rand.nextInt(assignableFields.length)];
+		}
 		while (!picked) {
 			int nextInt = rand.nextInt(horizontalAndVerticalNeighbors.length);
 			pickedField = horizontalAndVerticalNeighbors[nextInt];
-			picked = pickedField.isAssignable()
-					&& isAssgnableInContext(instance, pickedField) && fieldNotOnEdge(pickedField);
+			
 			if(picked) {
 				return pickedField;
-			}
-			if( System.currentTimeMillis() - start > timeout) {
-				break;
 			}
 		}
 
 		// if unable to pick the field, choose random place
 
 		return getFirstAssignableFieldFromInstance(instance);
+	}
+
+	private Field[] getAssignableFields(KakuroInstance instance, Field[] horizontalAndVerticalNeighbors) throws Exception {
+		for(Field pickedField : horizontalAndVerticalNeighbors) { 
+		boolean picked = pickedField.isAssignable()
+				&& isAssgnableInContext(instance, pickedField) && fieldNotOnEdge(pickedField);
+		}
 	}
 
 	private boolean fieldNotOnEdge(Field pickedField) {
@@ -478,6 +483,7 @@ public class TraversingGenerator implements GeneratorInterface {
 	}
 
 	public static void main(String[] args) throws Exception {
-		KakuroInstance generate = new TraversingGenerator(100, 100).generate(100L);
+		TraversingGenerator traversingGenerator = new TraversingGenerator(100, 100);
+		KakuroInstance generate = traversingGenerator.generate(100L);
 	}
 }
