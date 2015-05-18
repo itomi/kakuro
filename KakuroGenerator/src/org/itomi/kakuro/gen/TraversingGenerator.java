@@ -1,8 +1,11 @@
 package org.itomi.kakuro.gen;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TreeSet;
 
 import org.itomi.kakuro.integer.GeneratedIntegerPartition;
@@ -76,6 +79,7 @@ public class TraversingGenerator implements GeneratorInterface {
 		Random random = new Random(seed);
 		KakuroInstance instance = new KakuroInstance(horizontalLength,
 				verticalLength);
+		Stack<Field> visitedFields = new Stack<>();
 
 		ValueField currentField = initializeField(random, instance);
 		int currentValue = currentField.getValue();
@@ -85,6 +89,7 @@ public class TraversingGenerator implements GeneratorInterface {
 			if (field == null) {
 				throw new Exception("Could not pick the field");
 			}
+			visitedFields.add(currentField);
 
 			if (fieldIsAssignable(field)) {
 				currentValue = createValueForField(field, instance, random);
@@ -309,11 +314,12 @@ public class TraversingGenerator implements GeneratorInterface {
 				.getHorizontalAndVerticalNeighbors();
 		boolean picked = false;
 		Field pickedField = null;
-		Field[] assignableFields = getAssignableFields(instance, horizontalAndVerticalNeighbors);
-		if( assignableFields.length > 0 ) {
-			pickedField = assignableFields[rand.nextInt(assignableFields.length)];
+		List<Field> assignableFields = getAssignableFields(instance, horizontalAndVerticalNeighbors);
+		if( assignableFields.size() > 0 ) {
+			return assignableFields.get(rand.nextInt(assignableFields.size()));
 		}
-		while (!picked) {
+		
+		while (pickedField == null) {
 			int nextInt = rand.nextInt(horizontalAndVerticalNeighbors.length);
 			pickedField = horizontalAndVerticalNeighbors[nextInt];
 			
@@ -327,16 +333,14 @@ public class TraversingGenerator implements GeneratorInterface {
 		return getFirstAssignableFieldFromInstance(instance);
 	}
 
-	private Field[] getAssignableFields(KakuroInstance instance, Field[] horizontalAndVerticalNeighbors) throws Exception {
-		for(Field pickedField : horizontalAndVerticalNeighbors) { 
-		boolean picked = pickedField.isAssignable()
-				&& isAssgnableInContext(instance, pickedField) && fieldNotOnEdge(pickedField);
+	private List<Field> getAssignableFields(KakuroInstance instance, Field[] horizontalAndVerticalNeighbors) throws Exception {
+		List<Field> assignableFields = new LinkedList<Field>();
+		for(Field potentialField : horizontalAndVerticalNeighbors) { 
+			if(potentialField.isAssignable() & !potentialField.isOnEdge() & isAssgnableInContext(instance, potentialField) ) {
+				assignableFields.add(potentialField); 
+			}
 		}
-	}
-
-	private boolean fieldNotOnEdge(Field pickedField) {
-		Tuple<Integer, Integer> position = pickedField.getPosition();
-		return !(position.getFirst().equals(0) || position.getSecond().equals(0));
+		return assignableFields;
 	}
 
 	private Field getFirstAssignableFieldFromInstance(KakuroInstance instance) throws Exception {
@@ -349,7 +353,7 @@ public class TraversingGenerator implements GeneratorInterface {
 				}
 			}
 		}
-		return null;
+		throw new Exception("Level of density is already to big, interrupting generation.");
 	}
 
 	private boolean isAssgnableInContext(KakuroInstance instance,

@@ -32,7 +32,7 @@ public class ImmutableSubMatrix<T extends Field> {
 		try{
 			return matrix[xPos+x][yPos+y];
 		}catch(Exception e) {
-			return (T) new UnasignableField();
+			return (T) new UnasignableField(); // poto by nie bylo nigdy wybrane jesli wychodzi poza wielkosc instancji
 		}
 	}
 	

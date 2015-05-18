@@ -36,6 +36,10 @@ public abstract class Field extends IndentifiableEntity{
 	
 	public abstract boolean isAssignable();
 	
+	public boolean isOnEdge() {
+		return position.getFirst().equals(0) || position.getSecond().equals(0);
+	}
+	
 	@Override
 	public String toString() {
 		return "Field " + position.toString();
