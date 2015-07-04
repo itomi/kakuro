@@ -84,7 +84,7 @@ public class TraversingGenerator implements GeneratorInterface {
 		ValueField currentField = initializeField(random, instance);
 		int currentValue = currentField.getValue();
 
-		while (!instanceIsReady(instance)) {
+		while (!instanceIsReady(instance, density)) {
 			Field field = pickPlaceToCreateValue(currentField, instance, random);
 			if (field == null) {
 				throw new Exception("Could not pick the field");
@@ -482,8 +482,8 @@ public class TraversingGenerator implements GeneratorInterface {
 		return null;
 	}
 
-	private boolean instanceIsReady(KakuroInstance instance) {
-		return instance.getDensity() > 60;
+	private boolean instanceIsReady(KakuroInstance instance, int density) {
+		return instance.getDensity() > density;
 	}
 
 	public static void main(String[] args) throws Exception {
