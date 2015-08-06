@@ -1,4 +1,4 @@
-package org.itomi.kakuro.gen;
+package org.itomi.kakuro.dep;
 
 import org.itomi.kakuro.model.fields.Field;
 import org.itomi.kakuro.model.fields.ValueField;
