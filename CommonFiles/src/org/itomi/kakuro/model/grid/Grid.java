@@ -15,7 +15,7 @@ import com.google.common.collect.Lists;
 public class Grid extends IndentifiableEntity{
 	private int x;
 	private int y;
-	private int fullfillment = 1;
+	private Density density = new Density();
 	
 	Field[][] fieldMatrix;
 	
@@ -71,7 +71,7 @@ public class Grid extends IndentifiableEntity{
 		assertValuesInRange(x, y);
 		Field currentField = fieldMatrix[x][y];
 		if( currentField.getFieldProportionValue() != field.getFieldProportionValue() ) {
-			fullfillment += field.getFieldProportionValue();
+			density.addDensity(field.getFieldProportionValue());
 		}
 		fieldMatrix[x][y] = field;
 	}
@@ -81,12 +81,12 @@ public class Grid extends IndentifiableEntity{
 		return fieldMatrix;
 	}
 
-	public int getFillProportion() {
-		return fullfillment;
+	public Density getFillProportion() {
+		return density;
 	}
 
-	public ImmutableSubMatrix<Field> getNeighbours(Tuple<Integer, Integer> position) {
-		return new ImmutableSubMatrix<Field>(this.fieldMatrix, position.getFirst(), position.getSecond(), 3, 3);		
+	public ImmutableSubMatrix getNeighbours(Tuple<Integer, Integer> position) {
+		return new ImmutableSubMatrix(this.fieldMatrix, position.getFirst(), position.getSecond(), 3, 3);		
 	}
 
 	public void addSum(SumField verticalSum) {

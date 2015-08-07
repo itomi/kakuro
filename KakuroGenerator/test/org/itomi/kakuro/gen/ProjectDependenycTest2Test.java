@@ -1,4 +1,5 @@
 package org.itomi.kakuro.gen;
+import org.itomi.kakuro.dep.ProjectDependenycTest2;
 import org.itomi.kakuro.model.fields.ValueField;
 import org.junit.Assert;
 import org.junit.Before;

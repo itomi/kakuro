@@ -1,6 +1,5 @@
 package org.itomi.kakuro.model.grid;
 
-import org.itomi.kakuro.integer.Tuple;
 import org.itomi.kakuro.model.fields.Field;
 import org.itomi.kakuro.model.fields.UnasignableField;
 
@@ -12,15 +11,15 @@ import org.itomi.kakuro.model.fields.UnasignableField;
  * @param <T>
  * 		type of matrix
  */
-public class ImmutableSubMatrix<T extends Field> {
+public class ImmutableSubMatrix {
 
-	private T[][] matrix;
+	private Field[][] matrix;
 	private int xPos;
 	private int yPos;
 	private int deltax;
 	private int deltay;
 	
-	public ImmutableSubMatrix(T[][] matrix, int xPos, int yPos, int deltax, int deltay) {
+	public ImmutableSubMatrix(Field[][] matrix, int xPos, int yPos, int deltax, int deltay) {
 		this.matrix = matrix;
 		this.xPos = xPos-1;
 		this.yPos = yPos-1;
@@ -28,11 +27,11 @@ public class ImmutableSubMatrix<T extends Field> {
 		this.deltay = deltay;
 	}
 	
-	public T get(int x, int y) {
+	public Field get(int x, int y) {
 		try{
 			return matrix[xPos+x][yPos+y];
 		}catch(Exception e) {
-			return (T) new UnasignableField(); // poto by nie bylo nigdy wybrane jesli wychodzi poza wielkosc instancji
+			return new UnasignableField(); // poto by nie bylo nigdy wybrane jesli wychodzi poza wielkosc instancji
 		}
 	}
 	

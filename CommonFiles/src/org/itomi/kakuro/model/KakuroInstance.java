@@ -3,7 +3,7 @@ package org.itomi.kakuro.model;
 import java.util.Observable;
 
 import org.itomi.kakuro.integer.Tuple;
-import org.itomi.kakuro.model.fields.Field;
+import org.itomi.kakuro.model.grid.Density;
 import org.itomi.kakuro.model.grid.Grid;
 import org.itomi.kakuro.model.grid.ImmutableSubMatrix;
 
@@ -35,11 +35,11 @@ public class KakuroInstance extends Observable {
 		notifyObservers(this);
 	}
 	
-	public int getDensity() {
+	public Density getDensity() {
 		return grid.getFillProportion();
 	}
 
-	public ImmutableSubMatrix<Field> getNeighbours(Tuple<Integer, Integer> position) {
+	public ImmutableSubMatrix getNeighbours(Tuple<Integer, Integer> position) {
 		return grid.getNeighbours(position);
 	}
 	

@@ -15,7 +15,6 @@ public class BlankField extends Field {
 	
 	@Override
 	public int getFieldProportionValue() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

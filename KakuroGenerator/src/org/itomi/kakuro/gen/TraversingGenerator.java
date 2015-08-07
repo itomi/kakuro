@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
 
-import org.itomi.kakuro.integer.GeneratedIntegerPartition;
 import org.itomi.kakuro.integer.Tuple;
 import org.itomi.kakuro.model.KakuroInstance;
 import org.itomi.kakuro.model.fields.BlankField;
@@ -106,7 +105,7 @@ public class TraversingGenerator implements GeneratorInterface {
 
 	private int createValueForField(Field field, KakuroInstance instance,
 			Random random) throws Exception {
-		ImmutableSubMatrix<Field> neighbours = instance.getNeighbours(field
+		ImmutableSubMatrix neighbours = instance.getNeighbours(field
 				.getPosition());
 		if (field instanceof SumField) {
 			// jesli sum field
@@ -308,7 +307,7 @@ public class TraversingGenerator implements GeneratorInterface {
 	private Field pickPlaceToCreateValue(ValueField currentField,
 			KakuroInstance instance, Random rand) throws Exception {
 		Tuple<Integer, Integer> position = currentField.getPosition();
-		ImmutableSubMatrix<Field> neighbours = instance.getNeighbours(position);
+		ImmutableSubMatrix neighbours = instance.getNeighbours(position);
 		// pick field by mixing with random
 		Field[] horizontalAndVerticalNeighbors = neighbours
 				.getHorizontalAndVerticalNeighbors();
@@ -459,7 +458,7 @@ public class TraversingGenerator implements GeneratorInterface {
 	}
 
 	private SumField getLeftSum(KakuroInstance instance, Field s1) {
-		ImmutableSubMatrix<Field> neighbours = instance.getNeighbours(s1
+		ImmutableSubMatrix neighbours = instance.getNeighbours(s1
 				.getPosition());
 		Field leftSideNeigbor = neighbours.getLeftSideNeigbor();
 		if (leftSideNeigbor instanceof ValueField) {
@@ -471,7 +470,7 @@ public class TraversingGenerator implements GeneratorInterface {
 	}
 
 	private SumField getUpperSum(KakuroInstance instance, Field s1) {
-		ImmutableSubMatrix<Field> neighbours = instance.getNeighbours(s1
+		ImmutableSubMatrix neighbours = instance.getNeighbours(s1
 				.getPosition());
 		Field upperSideNeigbor = neighbours.getUpperSideNeighbor();
 		if (upperSideNeigbor instanceof ValueField) {
@@ -483,11 +482,6 @@ public class TraversingGenerator implements GeneratorInterface {
 	}
 
 	private boolean instanceIsReady(KakuroInstance instance, int density) {
-		return instance.getDensity() > density;
-	}
-
-	public static void main(String[] args) throws Exception {
-		TraversingGenerator traversingGenerator = new TraversingGenerator(100, 100);
-		KakuroInstance generate = traversingGenerator.generate(100L);
+		return instance.getDensity().getDensity() > density;
 	}
 }
