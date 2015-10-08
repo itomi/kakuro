@@ -1,8 +1,21 @@
 package org.itomi.kakuro.model.grid;
 
+/**
+ * Represents the density of some object ( used for density of grid ).
+ * 
+ * TODO: get better name for it
+ * @author Hertz
+ *
+ */
 public class Density {
 	
 	private int density;
+	
+	public Density() {}
+	
+	public Density(int startingDensity) {
+		this.density = startingDensity;
+	}
 	
 	public int getDensity() {
 		return density;

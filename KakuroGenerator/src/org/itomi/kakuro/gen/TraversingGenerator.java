@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
 
+import javax.security.auth.login.Configuration;
+
+import org.itomi.kakuro.annotations.Traversing;
 import org.itomi.kakuro.integer.Tuple;
 import org.itomi.kakuro.model.KakuroInstance;
 import org.itomi.kakuro.model.fields.BlankField;
@@ -33,7 +36,8 @@ import com.google.common.collect.Sets;
  * @author Karol Kulesza
  *
  */
-public class TraversingGenerator implements GeneratorInterface {
+@Traversing
+public class TraversingGenerator implements Generator {
 
 	private static final int MAXIMUM_SUM_VALUE = 45;
 	
@@ -55,7 +59,7 @@ public class TraversingGenerator implements GeneratorInterface {
 		this.verticalLength = y;
 	}
 
-	public KakuroInstance generate(final Long seed) throws Exception {
+	public KakuroInstance generate(final Long seed, Configuration configuration) throws Exception {
 		return generate(seed, 60);
 	}
 

@@ -3,6 +3,8 @@ package org.itomi.kakuro.gen;
 import java.util.Random;
 import java.util.Set;
 
+import org.itomi.kakuro.annotations.Substracting;
+import org.itomi.kakuro.configuration.Configuration;
 import org.itomi.kakuro.model.KakuroInstance;
 import org.itomi.kakuro.model.fields.Field;
 import org.itomi.kakuro.model.fields.ValueField;
@@ -20,7 +22,8 @@ import com.google.common.collect.Sets;
  * @author Karol Kulesza
  *
  */
-public class SusbtractingGenerator implements GeneratorInterface {
+@Substracting
+public class SusbtractingGenerator implements Generator {
 	
 	private static final Set<Integer> allowedValues = Sets.newHashSet(1,2,3,4,5,6,7,9);
 	
@@ -34,7 +37,7 @@ public class SusbtractingGenerator implements GeneratorInterface {
 	}
 	
 	@Override
-	public KakuroInstance generate(Long seed) throws FieldBoundaryException {
+	public KakuroInstance generate(Long seed, Configuration configuration) throws FieldBoundaryException {
 		Random rand = new Random(seed);
 		KakuroInstance instance = new KakuroInstance(x, y);
 		Field field;

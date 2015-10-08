@@ -1,5 +1,7 @@
 package org.itomi.kakuro.configuration;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.itomi.kakuro.model.grid.Density;
@@ -11,10 +13,12 @@ import org.itomi.kakuro.model.grid.Density;
  *
  */
 public abstract class Configuration {
-	
+
 	public abstract int getInstanceWidth();
-	
+
 	public abstract int getInstanceHeight();
-	
-	public abstract Density getDesiredDensity();		
+
+	public abstract Density getDesiredDensity();
+
+	public abstract List<Object> getObservers();
 }
