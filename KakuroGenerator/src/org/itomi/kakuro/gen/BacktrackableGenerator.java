@@ -22,17 +22,13 @@ import org.itomi.kakuro.model.grid.Density;
 public class BacktrackableGenerator implements Generator {
 	
 	@Inject
-	Random randoms;
-	
-	@Inject
 	Configuration configuration;
 	
 	/* (non-Javadoc)
 	 * @see org.itomi.kakuro.gen.GeneratorInterface#generate(java.lang.Long)
 	 */
 	@Override
-	public KakuroInstance generate(Long seed, Configuration configuration) throws Exception {
-		randoms.setSeed(seed);
+	public KakuroInstance generate(Long seed, Configuration configuration) {
 		KakuroInstance instance = new KakuroInstance(configuration.getInstanceWidth(), configuration.getInstanceHeight());
 		Density desiredDensity = configuration.getDesiredDensity();
 		while(desiredDensity.lower(instance.getDensity())) {

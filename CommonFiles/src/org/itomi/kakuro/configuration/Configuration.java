@@ -2,7 +2,6 @@ package org.itomi.kakuro.configuration;
 
 import java.util.List;
 
-import javax.inject.Inject;
 
 import org.itomi.kakuro.model.grid.Density;
 

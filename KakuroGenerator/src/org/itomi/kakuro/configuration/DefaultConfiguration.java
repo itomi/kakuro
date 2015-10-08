@@ -1,6 +1,10 @@
 package org.itomi.kakuro.configuration;
 
+import java.util.List;
+
 import org.itomi.kakuro.model.grid.Density;
+
+import com.google.common.collect.Lists;
 
 public class DefaultConfiguration extends Configuration{
 
@@ -21,6 +25,11 @@ public class DefaultConfiguration extends Configuration{
 	@Override
 	public Density getDesiredDensity() {
 		return new Density(DEFAULT_DENSITY);
+	}
+
+	@Override
+	public List<Object> getObservers() {
+		return Lists.newArrayList();
 	}
 
 }

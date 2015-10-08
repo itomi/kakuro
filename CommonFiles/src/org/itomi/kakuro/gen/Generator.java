@@ -1,11 +1,10 @@
 package org.itomi.kakuro.gen;
 
-import javafx.beans.Observable;
 
 import org.itomi.kakuro.configuration.Configuration;
 import org.itomi.kakuro.model.KakuroInstance;
 
-public interface Generator extends Observable {
+public interface Generator {
 	/**
 	 * Generuje jedna instancje kakuro.
 	 * @param seed
@@ -15,5 +14,5 @@ public interface Generator extends Observable {
 	 * @return
 	 * 		wygenerowana instancja problemu
 	 */
-	public KakuroInstance generate(Long seed, Configuration configuration) throws Exception;
+	public KakuroInstance generate(Long seed, Configuration configuration) throws GenerationException;
 }

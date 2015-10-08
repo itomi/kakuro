@@ -22,4 +22,9 @@ public class BlankField extends Field {
 	public boolean isAssignable() {
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		return "[X]";
+	}
 }

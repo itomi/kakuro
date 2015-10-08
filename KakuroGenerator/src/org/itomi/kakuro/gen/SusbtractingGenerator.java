@@ -37,12 +37,11 @@ public class SusbtractingGenerator implements Generator {
 	}
 	
 	@Override
-	public KakuroInstance generate(Long seed, Configuration configuration) throws FieldBoundaryException {
+	public KakuroInstance generate(Long seed, Configuration configuration) {
 		Random rand = new Random(seed);
 		KakuroInstance instance = new KakuroInstance(x, y);
 		Field field;
 		
-		fillGridWithPseudoRandomData(instance, rand);
 		
 		while(!percentageSatisfied(instance, percentage)) {
 			field = removeRandomField(instance, rand);

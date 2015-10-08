@@ -71,4 +71,11 @@ public class SumField extends Field {
 	public boolean isAssignable() {
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		Optional<ConstraintHolder> down = getSumForDirection(Direction.SOUTH);
+		Optional<ConstraintHolder> right = getSumForDirection(Direction.EAST);
+		return "["+(down.isPresent() ? down.get().getSum() : " ") +"\\" + (right.isPresent() ? down.get().getSum() : " ") + "]";
+	}
 }
